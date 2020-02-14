@@ -8,17 +8,17 @@ services:
 addons:
   apt:
     sources:
-      - google-chrome
+      # - google-chrome
     packages:
-      - google-chrome-stable
-      - docker-ce
+      # - google-chrome-stable
+      # - docker-ce
  
 # Install any dependencies, update Docker Compose to 1.23.2 so we can use Dockerfile outside build context
 before_install:
  - docker --version
  - docker-compose --version
  - sudo rm /usr/local/bin/docker-compose
- - curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > docker-compose
+ - curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` > docker-compose
  - chmod +x docker-compose
  - sudo mv docker-compose /usr/local/bin
  - docker-compose --version
@@ -32,8 +32,8 @@ before_script:
  
 # Run some tests
 script:
-  - docker run gravitonian/todo-view-test npm test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-  - docker run gravitonian/todo-cache-service-test npm test
+  - docker run jpolanco94/todo-view-test npm test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  - docker run jpolanco94/todo-cache-service-test npm test
  
 after_success:
   # Build Production Images for deployment
